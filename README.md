@@ -18,7 +18,7 @@ Esta aplicación muestra una lista de cafés con detalles como nombre, imagen, p
 ## Vista Previa
 ![Captura del Proyecto](./src/assets/desktop-preview.png)
 
-Puedes ver la versión demo en vivo aquí: [Coffee Listing App](https://movie-search-app-ten-woad.vercel.app/)
+Puedes ver la versión demo en vivo aquí: [Coffee Listing App](https://coffee-listing-app-psi.vercel.app/)
 
 
 ## Tecnologías Utilizadas
@@ -58,7 +58,8 @@ Puedes ver la versión demo en vivo aquí: [Coffee Listing App](https://movie-se
 
 
 ## Estructura del Proyecto
-simple-coffee-listing-ts/
+
+```simple-coffee-listing-ts/
 ├── .gitignore
 ├── eslint.config.js
 ├── index.html
@@ -82,6 +83,7 @@ simple-coffee-listing-ts/
 ├── tsconfig.json
 ├── tsconfig.node.json
 └── vite.config.ts
+```
 
 ## Autor 👨‍💻
 Desarrollado por **[Ibrahim Almeyda](https://github.com/Ibrahim-003)**.
