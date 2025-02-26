@@ -1,36 +1,20 @@
-import { useState, useEffect } from "react";
-import { Coffee } from "../types/Coffee";
-import CoffeeCard from "./CoffeeCard";
+import React, { useState, useMemo } from 'react';
+import CoffeeCard from './CoffeeCard';
+import { useCoffees } from '../hooks/useCoffees';
+import { LoadingSkeleton } from './LoadingSkeleton';
+import { ErrorMessage } from './ErrorMessage';
 
 const CoffeeListing: React.FC = () => {
-  const [coffees, setCoffees] = useState<Coffee[]>([]);
-  const [showAvailableOnly, setShowAvailbleOnly] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [showAvailableOnly, setShowAvailableOnly] = useState(false);
+  const { coffees, isLoading, error } = useCoffees();
 
-  useEffect(() => {
-    const fetchCoffees = async () => {
-      try {
-        const response = await fetch(
-          "https://raw.githubusercontent.com/devchallenges-io/curriculum/refs/heads/main/4-frontend-libaries/challenges/group_1/data/simple-coffee-listing-data.json"
-        );
-        const data: Coffee[] = await response.json();
-        setCoffees(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching coffee data: ", error);
-        setIsLoading(false);
-      }
-    };
+  const filteredCoffees = useMemo(() => 
+    showAvailableOnly ? coffees.filter((coffee) => coffee.available) : coffees,
+    [coffees, showAvailableOnly]
+  );
 
-    fetchCoffees();
-  }, []);
-
-  const filteredCoffees = showAvailableOnly
-    ? coffees.filter((coffee) => coffee.available)
-    : coffees;
-
-  if (isLoading) {
-    return <p>Loading...</p>;
+  if (error) {
+    return <ErrorMessage message={error} />;
   }
 
   return (
@@ -62,25 +46,29 @@ const CoffeeListing: React.FC = () => {
       <div className='flex items-center justify-center gap-3'>
         <button
           className={`px-3 py-2 rounded-sm cursor-pointer ${
-            !showAvailableOnly ? "bg-muted-slate shadow" : ""
+            !showAvailableOnly ? 'bg-muted-slate shadow' : ''
           }`}
-          onClick={() => setShowAvailbleOnly(false)}
+          onClick={() => setShowAvailableOnly(false)}
         >
           All Products
         </button>
         <button
           className={`px-3 py-2 rounded-sm cursor-pointer ${
-            showAvailableOnly ? "bg-muted-slate shadow" : ""
+            showAvailableOnly ? 'bg-muted-slate shadow' : ''
           }`}
-          onClick={() => setShowAvailbleOnly(true)}
+          onClick={() => setShowAvailableOnly(true)}
         >
           Available Now
         </button>
       </div>
       <div className='grid lg:grid-cols-2 xl:grid-cols-3 mt-10 px-4 gap-y-16 lg:gap-x-8 justify-items-center items-center'>
-        {filteredCoffees.map((coffee) => (
-          <CoffeeCard key={coffee.id} coffee={coffee} />
-        ))}
+        {isLoading ? (
+          <LoadingSkeleton count={6} />
+        ) : (
+          filteredCoffees.map((coffee) => (
+            <CoffeeCard key={coffee.id} coffee={coffee} />
+          ))
+        )}
       </div>
     </section>
   );
