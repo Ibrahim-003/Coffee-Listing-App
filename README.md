@@ -16,7 +16,7 @@ Esta aplicación muestra una lista de cafés con detalles como nombre, imagen, p
 
 
 ## Vista Previa
-![Captura del Proyecto](./src/assets/desktop-preview.png)
+![Captura del Proyecto](./src/assets/desktop-preview.webp)
 
 Puedes ver la versión demo en vivo aquí: [Coffee Listing App](https://coffee-listing-app-psi.vercel.app/)
 
